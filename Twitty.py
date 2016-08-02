@@ -94,7 +94,9 @@ def get_followers(user_id='684031588745777154', screen_name='@RichardHammond'):
 friends,count = get_followers(user_id='757305452539633664',screen_name='@Galanin_Anton')
 #pprint(friends)
 for user_data in friends.values() :
-    print get_followers(user_data['id'],user_data['screen_name'])
+    friends_of_my_friends,friends_count=get_followers(user_data['id'],user_data['screen_name'])
+    print friends_of_my_friends
+    print friends_count
     print '------------------------------------------------'
 
 
