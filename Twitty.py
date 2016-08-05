@@ -33,10 +33,9 @@ for users in json_['users']:
     print 'NAME', ':',users['name']
 '''
 
-def get_picture(user='@thegrandtour', count=100):
+def get_picture(user='@thegrandtour', count=1):
     request = API.request('search/tweets', params = {'q':user,'since_id':'92727851','count':count})
     json_= request.json()
-    start = 'u\'media_url\': u\''
     i=1
     for contributors in json_['statuses']:
         try:
@@ -90,15 +89,48 @@ def get_followers(user_id='684031588745777154', screen_name='@RichardHammond'):
 
     #pprint(json_)
 
+def twitt_by_id(twitt_id='761521635530768385'):
+    request = API.request('statuses/lookup',params = {'id':twitt_id})
+    json_req = request.json()
+    #print json_req
+    json_req = json_req[0]
+    return  json_req['id_str']
 
+
+
+
+def stream():
+    r = API.request('statuses/filter', {'locations':'44,56,45,57'})
+    #json_req = r.json()
+    for item in r:
+        try:
+            id_str = item[u'id_str']
+        except:
+            id_str = None
+        try:
+            text = item[u'text']
+        except:
+            text = None
+        try:
+            screen_name = item['screen_name']
+        except:
+            screen_name = None
+
+        print id_str,text,screen_name
+
+
+
+'''
 friends,count = get_followers(user_id='757305452539633664',screen_name='@Galanin_Anton')
-#pprint(friends)
 for user_data in friends.values() :
     friends_of_my_friends,friends_count=get_followers(user_data['id'],user_data['screen_name'])
     print friends_of_my_friends
     print friends_count
     print '------------------------------------------------'
+'''
 
+#print get_picture(user='@thegrandtour', count=1)
+stream()
 
 
 
@@ -130,9 +162,8 @@ for user_data in friends.values() :
                 print ''
         except:
             pprint('-----------')
+
         '''
-
-
 
 '''
 
