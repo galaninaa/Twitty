@@ -99,7 +99,7 @@ def twitt_by_id(twitt_id='761521635530768385'):
 
 
 
-def stream():
+def stream(tag=None):
     r = API.request('statuses/filter', {'locations':'44,56,45,57'})
     #json_req = r.json()
     for item in r:
@@ -108,7 +108,12 @@ def stream():
         except:
             id_str = None
         try:
-            text = item[u'text']
+
+            if tag != None:
+                if tag in item[u'text']:
+                    text=item[u'text']
+            else:
+                text = item[u'text']
         except:
             text = None
         try:
@@ -117,6 +122,8 @@ def stream():
             screen_name = None
 
         print id_str,text,screen_name
+
+
 
 
 
@@ -129,10 +136,8 @@ for user_data in friends.values() :
     print '------------------------------------------------'
 '''
 
-#print get_picture(user='@thegrandtour', count=1)
-stream()
-
-
+#print get_picture(user='@thegrandtour', count=10)
+#stream()
 
 
 
